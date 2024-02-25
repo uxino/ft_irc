@@ -11,6 +11,7 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	$(CC) $(FLAGS) -o $(NAME) $(OBJECTS)
+	rm -rf *.o
 
 .cpp.o:
 	$(CC) $(FLAGS) -c $< -o ${<:.cpp=.o}

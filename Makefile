@@ -1,6 +1,6 @@
 NAME	= IRC
 
-SOURCES	= server.cpp
+SOURCES	= server.cpp Parse.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

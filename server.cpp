@@ -4,8 +4,10 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include "User.hpp"
+#include "Parse.hpp"
 
-#define PORT 6662
+#define PORT 6661
 #define MAX_CLIENTS 10
 
 int main(int argc, char **argv)
@@ -17,6 +19,7 @@ int main(int argc, char **argv)
     fd_set readfds;
     struct sockaddr_in address;
     ssize_t valread;
+
 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
@@ -96,6 +99,7 @@ int main(int argc, char **argv)
             if (FD_ISSET(sd, &readfds))
             {
                 valread = recv(sd, buffer, sizeof(buffer), 0);
+				user_info_parse(buffer);
                 if (valread == 0)
                 {
                     // Bağlantı kapatıldıysa
@@ -108,9 +112,9 @@ int main(int argc, char **argv)
                 {
                     // Gelen mesajı göster
                     std::cout << buffer << std::endl << std::endl << std::endl;
-					int esad31 = 0;
-                    if ((esad31 = send(sd, ":museker \r\n", 500, 0)) == -1)
-						std::cout << "elma armut: " << esad31 << std::endl;
+					// int esad31 = 0;
+                    // if ((esad31 = send(sd, ":museker \r\n", 500, 0)) == -1)
+					// 	std::cout << "elma armut: " << esad31 << std::endl;
 					// ":" + server->getHostname() + " " + reply.first
 					//  + " " + user->getNickname() + " " + reply.second
                 }

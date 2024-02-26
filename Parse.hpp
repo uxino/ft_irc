@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include "User.hpp"
-#include <string>
-#include <sstream>
+#include "Libraries.hpp"
 
-void user_info_parse(std::string str);
+void user_info_parse(std::vector<User> &users_v, std::string str, int newu_socket);

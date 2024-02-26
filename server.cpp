@@ -1,25 +1,24 @@
-#include <iostream>
-#include <cstring>
-#include <cstdlib>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <string.h>
-#include "User.hpp"
-#include "Parse.hpp"
+#include "Libraries.hpp"
 
-#define PORT 6661
 #define MAX_CLIENTS 10
 
 int main(int argc, char **argv)
 {
-    (void)argc;
-    (void)argv;
+	if (argc != 3)
+	{
+		std::cout << "Missing arguman!" << std::endl;
+		return (0);
+	}
+
+	int port = std::atoi(argv[1]);
+	char *pass = argv[2];
+	(void)pass;
     int server_fd, new_socket, max_clients = MAX_CLIENTS;
     int client_sockets[MAX_CLIENTS] = {0};
     fd_set readfds;
     struct sockaddr_in address;
     ssize_t valread;
-
+	std::vector<User> users_v;
 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
@@ -28,7 +27,7 @@ int main(int argc, char **argv)
     }
 
     address.sin_family = AF_INET;
-    address.sin_port = htons(PORT);
+    address.sin_port = htons(port);
     address.sin_addr.s_addr = INADDR_ANY;
 
     if ((bind(server_fd, (struct sockaddr *)&address, sizeof(address))) < 0)
@@ -42,7 +41,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    std::cout << "Server is listening on port " << PORT << std::endl;
+    std::cout << "Server is listening on port " << port << std::endl;
 	
     while (1)
     {
@@ -99,7 +98,11 @@ int main(int argc, char **argv)
             if (FD_ISSET(sd, &readfds))
             {
                 valread = recv(sd, buffer, sizeof(buffer), 0);
-				user_info_parse(buffer);
+				std::string tmp_buffer(buffer);
+				if (tmp_buffer.find("USER") != std::string::npos &&
+					tmp_buffer.find("PASS") != std::string::npos &&
+					tmp_buffer.find("NICK") != std::string::npos)
+					user_info_parse(users_v, tmp_buffer, new_socket);
                 if (valread == 0)
                 {
                     // Bağlantı kapatıldıysa

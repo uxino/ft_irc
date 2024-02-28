@@ -11,8 +11,7 @@ int main(int argc, char **argv)
 	}
 
 	int port = std::atoi(argv[1]);
-	char *pass = argv[2];
-	(void)pass;
+	char *arg_pass = argv[2];
     int server_fd, new_socket, max_clients = MAX_CLIENTS;
     int client_sockets[MAX_CLIENTS] = {0};
     fd_set readfds;
@@ -45,6 +44,7 @@ int main(int argc, char **argv)
 	
     while (1)
     {
+		users_v.clear();
         FD_ZERO(&readfds); // Dosya tanımlayıcı kümesini temizle
     	char buffer[1024] = {0};
 
@@ -99,10 +99,20 @@ int main(int argc, char **argv)
             {
                 valread = recv(sd, buffer, sizeof(buffer), 0);
 				std::string tmp_buffer(buffer);
+				std::string tmp_pass(arg_pass);
 				if (tmp_buffer.find("USER") != std::string::npos &&
 					tmp_buffer.find("PASS") != std::string::npos &&
 					tmp_buffer.find("NICK") != std::string::npos)
-					user_info_parse(users_v, tmp_buffer, new_socket);
+				{
+					if (user_info_parse(users_v, tmp_buffer, new_socket, tmp_pass) == 1)
+					{
+						std::string message1 = ":127.0.0.1 001 "+ users_v[users_v.size() - 1].getName() + " :Welcome to the Internet Relay Network " + users_v[users_v.size() - 1].getName() + "!" +users_v[users_v.size() - 1].getName() + "@127.0.0.1\r\n";
+						send(sd, message1.c_str() , message1.length(), 0);
+					}
+					else
+						continue;
+				}
+
                 if (valread == 0)
                 {
                     getpeername(sd, (struct sockaddr *)&address, (socklen_t *)&address);
@@ -112,8 +122,7 @@ int main(int argc, char **argv)
                 }
                 else
                 {
-                    // Gelen mesajı göster
-                    std::cout << buffer << std::endl << std::endl << std::endl;
+                    std::cout << buffer << std::endl;
                 }
             }
         }

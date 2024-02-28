@@ -105,7 +105,6 @@ int main(int argc, char **argv)
 					user_info_parse(users_v, tmp_buffer, new_socket);
                 if (valread == 0)
                 {
-                    // Bağlantı kapatıldıysa
                     getpeername(sd, (struct sockaddr *)&address, (socklen_t *)&address);
                     std::cout << "Host disconnected, ip " << inet_ntoa(address.sin_addr) << ", port " << ntohs(address.sin_port) << std::endl;
                     close(sd);
@@ -115,11 +114,6 @@ int main(int argc, char **argv)
                 {
                     // Gelen mesajı göster
                     std::cout << buffer << std::endl << std::endl << std::endl;
-					// int esad31 = 0;
-                    // if ((esad31 = send(sd, ":museker \r\n", 500, 0)) == -1)
-					// 	std::cout << "elma armut: " << esad31 << std::endl;
-					// ":" + server->getHostname() + " " + reply.first
-					//  + " " + user->getNickname() + " " + reply.second
                 }
             }
         }

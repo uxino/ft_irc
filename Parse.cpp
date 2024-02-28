@@ -1,5 +1,12 @@
 #include "Libraries.hpp"
 
+int where_a_point(std::string str, char c)
+{
+	int index = str.find(c);
+	return (index);
+}
+
+
 void user_info_parse(std::vector<User> &users_v, std::string str, int newu_socket)
 {
 	std::string pass;
@@ -35,12 +42,12 @@ void user_info_parse(std::vector<User> &users_v, std::string str, int newu_socke
 			std::cout << "gelmdimm" << line.substr(5,line.size()) << std::endl;
 		}
 		else if(line.substr(0,4) == "USER")
-			user_n = line.substr(5,line.size());
+		{
+			int index = where_a_point(line, '0');
+			user.setName(line.substr(5, index - 6));
+			user.setIp(line.substr(index + 2, where_a_point(line, ':') - index - 3));
+		}
 	}
 	user.setSocket(newu_socket);
 	users_v.push_back(user);
-	
-	// std::cout << "USER: " << user.getName() + " || ";
-	std::cout << "31 " << user.getNickname() << std::endl;
-	std::cout << "PASSSSSS " << user.getPass() << std::endl;
 }

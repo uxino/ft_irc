@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 				{
 					if (user_info_parse(users_v, tmp_buffer, new_socket, tmp_pass) == 1)
 					{
-						std::string message1 = ":127.0.0.1 001 "+ users_v[users_v.size() - 1].getName() + " :Welcome to the Internet Relay Network " + users_v[users_v.size() - 1].getName() + "!" +users_v[users_v.size() - 1].getName() + "@127.0.0.1\r\n";
+						std::string message1 = ":" + users_v[users_v.size() -1].getIp() +" 001 "+ users_v[users_v.size() - 1].getName() + " :Welcome to the Internet Relay Network " + users_v[users_v.size() - 1].getName() + "!" +users_v[users_v.size() - 1].getName() + "@" + users_v[users_v.size() -1].getIp() +"\r\n";
 						send(sd, message1.c_str() , message1.length(), 0);
 					}
 					else

@@ -17,6 +17,7 @@ $(NAME): $(OBJECTS)
 
 clean:
 	rm -f *.o
+	rm -rf .vscode
 
 fclean: clean
 	rm -f $(NAME)

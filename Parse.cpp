@@ -33,9 +33,9 @@ int		user_info_parse(std::vector<User> &users_v, std::string str, int newu_socke
 			user.setNickname(line.substr(5,line.size()));
 		else if(line.substr(0,4) == "USER")
 		{
-			int index = where_a_point(line, '0');
+			int index = where_is_a_point(line, '0');
 			user.setName(line.substr(5, index - 6));
-			user.setIp(line.substr(index + 2, where_a_point(line, ':') - index - 3));
+			user.setIp(line.substr(index + 2, where_is_a_point(line, ':') - index - 3));
 		}
 	}
 	user.setSocket(newu_socket);

@@ -1,17 +1,17 @@
-#include <iostream>
-#include <cstring>
-#include <cstdlib>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <string.h>
+#include "Libraries.hpp"
 
-#define PORT 6662
 #define MAX_CLIENTS 10
 
 int main(int argc, char **argv)
 {
-    (void)argc;
-    (void)argv;
+	if (argc != 3)
+	{
+		std::cout << "Missing arguman!" << std::endl;
+		return (0);
+	}
+
+	int port = std::atoi(argv[1]);
+	char *arg_pass = argv[2];
     int server_fd, new_socket, max_clients = MAX_CLIENTS;
     int client_sockets[MAX_CLIENTS] = {0};
     fd_set readfds;
@@ -98,9 +98,23 @@ int main(int argc, char **argv)
             if (FD_ISSET(sd, &readfds))
             {
                 valread = recv(sd, buffer, sizeof(buffer), 0);
+				std::string tmp_buffer(buffer);
+				std::string tmp_pass(arg_pass);
+				if (tmp_buffer.find("USER") != std::string::npos &&
+					tmp_buffer.find("PASS") != std::string::npos &&
+					tmp_buffer.find("NICK") != std::string::npos)
+				{
+					if (user_info_parse(users_v, tmp_buffer, new_socket, tmp_pass) == 1)
+					{
+						std::string message1 = ":" + users_v[users_v.size() -1].getIp() +" 001 "+ users_v[users_v.size() - 1].getName() + " :Welcome to the Internet Relay Network " + users_v[users_v.size() - 1].getName() + "!" +users_v[users_v.size() - 1].getName() + "@" + users_v[users_v.size() -1].getIp() +"\r\n";
+						send(sd, message1.c_str() , message1.length(), 0);
+					}
+					else
+						continue;
+				}
+
                 if (valread == 0)
                 {
-                    // Bağlantı kapatıldıysa
                     getpeername(sd, (struct sockaddr *)&address, (socklen_t *)&address);
                     std::cout << "Host disconnected, ip " << inet_ntoa(address.sin_addr) << ", port " << ntohs(address.sin_port) << std::endl;
                     close(sd);
@@ -108,41 +122,10 @@ int main(int argc, char **argv)
                 }
                 else
                 {
-                    // Gelen mesajı göster
-                    std::cout << buffer << std::endl << std::endl << std::endl;
-					int esad31 = 0;
-                    if ((esad31 = send(sd, ":museker \r\n", 500, 0)) == -1)
-						std::cout << "elma armut: " << esad31 << std::endl;
-					// ":" + server->getHostname() + " " + reply.first
-					//  + " " + user->getNickname() + " " + reply.second
+                    std::cout << buffer << std::endl;
                 }
             }
         }
     }
     return 0;
 }
-// çoğu yerde max_client değişkeni yerine o an baglı olan client sayısını tutan bir connected_clients değişken kullansak daha güvenli olur.
-// perror & nullptr kullanımı c++98 standartına göre derlendiğinde hata veriyor linux 
-// irc serverine baglandıktan sonra disconnect attıgımda irc quit sinyali gönderildi diyor ona göre bi işlem yapmamız lazım sanırım.
-// disconnecte zorlayınca da [SOCKET ERROR]: Operation aborted
-
-// benim yazdiklarımın basinda '--' var
-/*
-[22:39:59] Logging in as fdgn_faruk!faruktt :faruktinaz
-[22:39:59] The local IP address as seen by the IRC server is 127.0.0.1
-[22:39:59] Login operations complete, happy ircing!
-[22:39:59] Welcome to the Internet Relay Network faruktt!faruktt@127.0.0.1
---[22:40:10] [RAW]: nasi
-[22:40:16] [][PASS] :123444
-[22:40:16] [][USER] faruktt 0 127.0.0.1 :faruktinaz
-[22:40:18] [Server parser]: encountered problems while parsing the following message:
-[22:40:18] [Server parser]: [127.0.0.1][JOIN] #kvirc
-[22:40:18] [Server parser]: Received a join message for an unknown channel, possible desync
---[22:40:21] [][ALO] 
-[22:40:21] Received ping from 127.0.0.1 (PING faruktt 127.0.0.1), replied pong
---[22:40:34] [RAW]: alo
-[22:40:44] Sent QUIT, waiting for the server to close the connection... **
-[22:40:47] [SOCKET ERROR]: Operation aborted
-[22:40:47] Connection terminated [127.0.0.1 (127.0.0.1:6000)]
-*/
-

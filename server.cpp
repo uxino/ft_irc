@@ -44,7 +44,6 @@ int main(int argc, char **argv)
 	
     while (1)
     {
-		users_v.clear();
         FD_ZERO(&readfds); // Dosya tanımlayıcı kümesini temizle
     	char buffer[1024] = {0};
 
@@ -107,12 +106,10 @@ int main(int argc, char **argv)
 					if (user_info_parse(users_v, tmp_buffer, new_socket, tmp_pass) == 1)
 					{
 						std::string message1 = ":" + users_v[users_v.size() -1].getIp() +" 001 "+ users_v[users_v.size() - 1].getName() + " :Welcome to the Internet Relay Network " + users_v[users_v.size() - 1].getName() + "!" +users_v[users_v.size() - 1].getName() + "@" + users_v[users_v.size() -1].getIp() +"\r\n";
+						std::string join(buffer);
 						send(sd, message1.c_str() , message1.length(), 0);
 					}
-					else
-						continue;
 				}
-
                 if (valread == 0)
                 {
                     getpeername(sd, (struct sockaddr *)&address, (socklen_t *)&address);
@@ -122,6 +119,14 @@ int main(int argc, char **argv)
                 }
                 else
                 {
+					std::string join(buffer);
+					std::string join_key;
+					if (join.find("JOIN") != std::string::npos)
+					{
+						join_key = join_parse(join);
+						std::string join_msg = ":" + users_v[users_v.size()-1].getNickname() + "!" + users_v[users_v.size()-1].getName() + '@' + users_v[users_v.size()-1].getIp() + " JOIN #" + join_key + "\r\n";
+						send(sd, join_msg.c_str(), join_msg.size(), 0);
+					}
                     std::cout << buffer << std::endl;
                 }
             }

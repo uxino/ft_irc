@@ -1,4 +1,4 @@
-NAME	= IRC
+NAME	= ircserv
 
 SOURCES	= server.cpp Parse.cpp User.cpp
 

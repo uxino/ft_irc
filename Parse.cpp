@@ -6,6 +6,16 @@ int where_is_a_point(std::string str, char c)
 	return (index);
 }
 
+std::string		join_parse(std::string str)
+{
+	std::string name;
+
+	name = str.substr(str.find("#") + 1, 3);
+	std::cout << "NAME: " << name << std::endl;
+	// std::cout << "index: " << str.find(" ", str.find(" ") + 1) - str.find("#") - 1 << std::endl;
+	return (name);
+}
+
 int		user_info_parse(std::vector<User> &users_v, std::string str, int newu_socket, std::string arg_pass)
 {
 	std::string pass;

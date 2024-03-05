@@ -1,18 +1,17 @@
-// faruktinaz mar 4
+#include <iostream>
+#include <cstring>
+#include <cstdlib>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <string.h>
 
-#include "Libraries.hpp"
+#define PORT 6662
 #define MAX_CLIENTS 10
 
 int main(int argc, char **argv)
 {
-	if (argc != 3)
-	{
-		std::cout << "Missing arguman!" << std::endl;
-		return (0);
-	}
-
-	int port = std::atoi(argv[1]);
-	char *arg_pass = argv[2];
+    (void)argc;
+    (void)argv;
     int server_fd, new_socket, max_clients = MAX_CLIENTS;
     int client_sockets[MAX_CLIENTS] = {0};
     fd_set readfds;
@@ -99,38 +98,23 @@ int main(int argc, char **argv)
             if (FD_ISSET(sd, &readfds))
             {
                 valread = recv(sd, buffer, sizeof(buffer), 0);
-				std::string tmp_buffer(buffer);
-				std::string tmp_pass(arg_pass);
-				if (tmp_buffer.find("USER") != std::string::npos &&
-					tmp_buffer.find("PASS") != std::string::npos &&
-					tmp_buffer.find("NICK") != std::string::npos)
-				{
-					if (user_info_parse(users_v, tmp_buffer, new_socket, tmp_pass) == 1)
-					{
-						std::string message1 = ":" + users_v[users_v.size() -1].getIp() +" 001 "+ users_v[users_v.size() - 1].getName() + " :Welcome to the Internet Relay Network " + users_v[users_v.size() - 1].getName() + "!" + users_v[users_v.size() - 1].getName() + "@" + users_v[users_v.size() -1].getIp() +"\r\n";
-						send(sd, message1.c_str() , message1.length(), 0);
-					}
-					else
-						continue;
-				}
-
                 if (valread == 0)
                 {
-					struct sockaddr_in address;
-					socklen_t addr_len = sizeof(address);
-					getpeername(sd, (struct sockaddr *)&address, &addr_len);
+                    // Bağlantı kapatıldıysa
+                    getpeername(sd, (struct sockaddr *)&address, (socklen_t *)&address);
                     std::cout << "Host disconnected, ip " << inet_ntoa(address.sin_addr) << ", port " << ntohs(address.sin_port) << std::endl;
                     close(sd);
                     client_sockets[i] = 0;
                 }
-                else // send the message to other clients. when i would like to print message like "users_v[sd].getName(): 'message'", i got seg
+                else
                 {
-					std::cout << ": " << buffer << std::endl; 
-					for (int x = 0; x < max_clients; x++)
-					{
-						if (client_sockets[x] != sd)
-							send(client_sockets[x], buffer, strlen(buffer), 0);
-					}
+                    // Gelen mesajı göster
+                    std::cout << buffer << std::endl << std::endl << std::endl;
+					int esad31 = 0;
+                    if ((esad31 = send(sd, ":museker \r\n", 500, 0)) == -1)
+						std::cout << "elma armut: " << esad31 << std::endl;
+					// ":" + server->getHostname() + " " + reply.first
+					//  + " " + user->getNickname() + " " + reply.second
                 }
             }
         }

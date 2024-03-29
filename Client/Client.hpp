@@ -10,9 +10,13 @@ class Client
         std::string pass;
         std::string ip;
     public:
+		Client();
+
         int         getSocket();
         std::string getUserName();
         std::string getNickName();
         std::string getPass();
         std::string getIp();
+
+		~Client();
 };

@@ -22,6 +22,9 @@ class Server
 		std::vector getChannels();
 		std::vector getClients();
 		std::vector getCommands();
+		int			getAcceptFd();
+		int			getServerFd();
+		int			getPort();
 		~Server();
 
 };

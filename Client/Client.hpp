@@ -11,7 +11,6 @@ class Client
         std::string ip;
     public:
 		Client();
-
         int         getSocket();
         std::string getUserName();
         std::string getNickName();

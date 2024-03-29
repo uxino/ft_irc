@@ -2,8 +2,8 @@
 
 #include "../Channel/Channel.hpp"
 #include "../Client/Client.hpp"
-#include "vector"
-#include "iostream"
+#include <vector>
+#include <iostream>
 
 class Server
 {
@@ -19,9 +19,9 @@ class Server
 
     public:
 		Server(int port, std::string pass);
-		std::vector getChannels();
-		std::vector getClients();
-		std::vector getCommands();
+		std::vector<Channel> getChannels();
+		std::vector<Client> getClients();
+		std::vector<std::string> getCommands();
 		int			getAcceptFd();
 		int			getServerFd();
 		int			getPort();

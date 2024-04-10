@@ -11,35 +11,47 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sstream>
 
-#define SOCKET_ERROR -1
-
+# define SOCKET_ERROR -1
+# define PASS "PASS"
+# define JOIN "JOIN"
+# define USER "USER"
+# define NICK "NICK"
 
 class Server
 {
-    public:
+    private:
+	    struct sockaddr_in			server_address;
+		typedef void(Server::*fpoint)(int, int);
         std::vector<Channel>		channels;
         std::vector<Client>			clients;
         std::vector<std::string>	commands;
-		std::string					serverIp;
 		std::vector<int>			connected_clients;
-		int 						port;
-		int							acceptFd;
-	    struct sockaddr_in			server_address;
+
 		int							sockfd;
+		int							acceptFd;
+		int 						port;
+		std::string					serverIp;
+		std::string					pass;
 		fd_set 						readfds;
+
     public:
 		Server(int port, std::string arg_pass);
 		std::vector<Channel> 		getChannels();
-		void						initilizeServer();
-		std::vector<Client> 		getClients();
-		int 						perr(std::string err, int sockfd);
 		std::vector<std::string>	getCommands();
-		int							checkCommands(Server &server, std::string buffer);
-		int							getAcceptFd();
+		std::vector<Client> 		getClients();
+
+		void						executeCommand(int clientsockt);
+		void						User(int index, int id);
+		void						Pass(int index, int id);
+		void						Nick(int index, int id);
+
 		int							getServerFd();
+		int							getAcceptFd();
 		int							getPort();
+		void						initilizeServer();
+		int 						perr(std::string err, int sockfd);
+		void						checkCommands(Server &server, std::string buffer, int socket);
 		~Server();
 };
-
-

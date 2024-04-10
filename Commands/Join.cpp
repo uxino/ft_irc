@@ -9,7 +9,10 @@ void    Server::Join(int index, int id)
     
     // Channel channel
 
+	// Channel channel(commands[index + 1]);
 
+	// channels.push_back(channel);
+	// channels[id].setChannel();
     clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@" + clients[id].getIp() + " JOIN " + commands[index + 1] + "\r\n");
 
 }

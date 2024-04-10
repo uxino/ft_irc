@@ -14,10 +14,12 @@
 #include <sstream>
 
 # define SOCKET_ERROR -1
-# define PASS "PASS"
-# define JOIN "JOIN"
-# define USER "USER"
-# define NICK "NICK"
+# define PASS		"PASS"
+# define JOIN		"JOIN"
+# define USER		"USER"
+# define NICK		"NICK"
+# define JOIN 		"JOIN"
+# define PRIVMSG	"PRIVMSG"
 
 class Server
 {
@@ -46,6 +48,8 @@ class Server
 		void						User(int index, int id);
 		void						Pass(int index, int id);
 		void						Nick(int index, int id);
+		void						Join(int index, int id);
+		void						Privmsg(int index, int id);
 
 		int							getServerFd();
 		int							getAcceptFd();

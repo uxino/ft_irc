@@ -63,9 +63,9 @@ void Server::initilizeServer()
 
 void Server::executeCommand(int id)
 {
-	std::string cmds[] = {USER, NICK, PASS};
+	std::string cmds[] = {USER, NICK, PASS, JOIN, PRIVMSG};
 	
-	std::vector<fpoint> tfun = {&Server::User, &Server::Nick, &Server::Pass};
+	std::vector<fpoint> tfun = {&Server::User, &Server::Nick, &Server::Pass, &Server::Join};
 
 	for (int i = 0; i < cmds->size(); i++)
 	{
@@ -97,7 +97,7 @@ Server::Server(int port, std::string arg_pass)
 	{
 		fd_set tmpfds = readfds;
 		int activity = select(max_sd + 1, &tmpfds, NULL, NULL, NULL);
-		if (activity < 0){perr("select error", sockfd);}
+		if (activity < 0){ perr("select error", sockfd );}
 
 		if (FD_ISSET(sockfd, &tmpfds))
 		{

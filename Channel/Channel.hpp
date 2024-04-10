@@ -3,7 +3,7 @@
 class Channel
 {
     private:
-		
+        
     public:
 
 };

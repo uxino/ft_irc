@@ -12,12 +12,9 @@ class Channel
 
     public:
         Channel(std::string name);
-
         std::vector<Client> getClients();
         std::string         getChannelName();
-
-		void				setClient();
-
+		void				addClient(Client client);
         ~Channel();
 
 };

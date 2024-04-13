@@ -13,6 +13,13 @@ void    Server::Join(int index, int id)
 
 	// channels.push_back(channel);
 	// channels[id].setChannel();
+	for (int i = 0; i < channels.size(); i++)
+	{
+		if (channels[i].getChannelName() == commands[index + 1])
+		{
+			
+		}
+	}
     clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@" + clients[id].getIp() + " JOIN " + commands[index + 1] + "\r\n");
 
 }

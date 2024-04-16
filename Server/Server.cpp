@@ -63,18 +63,28 @@ void Server::initilizeServer()
 
 void Server::executeCommand(int id)
 {
-	std::string cmds[] = {USER, NICK, PASS, JOIN, PRIVMSG};
-	
-	std::vector<fpoint> tfun = {&Server::User, &Server::Nick, &Server::Pass, &Server::Join};
+	std::vector<std::string> cmds;
+	std::vector<fpoint> tfun;
 
-	for (int i = 0; i < cmds->size(); i++)
+	cmds.push_back(USER);
+	cmds.push_back(NICK);
+	cmds.push_back(PASS);
+	cmds.push_back(JOIN);
+	cmds.push_back(PRIVMSG);
+
+	tfun.push_back(&Server::User);
+	tfun.push_back(&Server::Nick);
+	tfun.push_back(&Server::Pass);
+	tfun.push_back(&Server::Join);
+	tfun.push_back(&Server::Privmsg);
+
+	for (size_t i = 0; i < cmds.size(); i++)
 	{
-		for ( int j = 0; j < commands.size(); j++)
+		for (size_t j = 0; j < commands.size(); j++)
 		{
-			if ((cmds[i] == commands[j]) && (j+1 <= commands.size()))
+			if ((cmds[i] == commands[j]))
 			{
-				(this->*tfun[i])(j, id); // NICK n_museker
-
+				(this->*tfun[i])(j, id);
 			}
             else if (!(j+1 <= commands.size()))
             {
@@ -97,7 +107,7 @@ Server::Server(int port, std::string arg_pass)
 	{
 		fd_set tmpfds = readfds;
 		int activity = select(max_sd + 1, &tmpfds, NULL, NULL, NULL);
-		if (activity < 0){ perr("select error", sockfd );}
+		// if (activity < 0){ perr("select error", sockfd );}
 
 		if (FD_ISSET(sockfd, &tmpfds))
 		{

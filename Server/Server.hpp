@@ -13,13 +13,13 @@
 #include <arpa/inet.h>
 #include <sstream>
 
-# define SOCKET_ERROR -1
-# define PASS		"PASS"
-# define JOIN		"JOIN"
-# define USER		"USER"
-# define NICK		"NICK"
-# define JOIN 		"JOIN"
-# define PRIVMSG	"PRIVMSG"
+# define SOCKET_ERROR 	-1
+# define PASS			"PASS"
+# define JOIN			"JOIN"
+# define USER			"USER"
+# define NICK			"NICK"
+# define JOIN 			"JOIN"
+# define PRIVMSG		"PRIVMSG"
 
 class Server
 {

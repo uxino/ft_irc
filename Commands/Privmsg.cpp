@@ -20,19 +20,26 @@ void    Server::Privmsg(int index, int id)
     std::string message = "";
 
 
-    std::cout << "message bu: " << commands[3] << std::endl;
-	std::cout << "ben girdim!!!" << std::endl;
-
-    for (int i = 0; i < commands.size(); i++)
-        std::cout << ""    
-
-    // for (size_t j = 3; j < this->commands.size(); j++)
+    for (size_t i = 2; i < this->commands.size(); i++)
+    {
+        message += commands[i];
+        message += " ";
+    }
+    for (size_t i = 0; i < clients.size(); i++)
+    {
+        
+    }
+    
+    // if(this->commands[1].compare(this->clients[i].getNick()) == 0)
     // {
-    //     message += " ";
-    //     message += commands[j];
+        // clients[i].print(":" + client.getNick() + "!" + client.getUsername() + '@' + client.getRealIp() + " PRIVMSG " + clients[i].getNick() + " :" + message + "\r\n");
+        // client.print(":" + client.getNick() + "!" + client.getUsername() + '@' + client.getRealIp() + " PRIVMSG " + clients[i].getNick() + " :" + message + "\r\n");
+        // return ;
     // }
-
-    // clients[i].print(":" + client.getNick() + "!" + client.getUsername() + '@' + client.getRealIp() + " PRIVMSG " + clients[i].getNick() + " :" + message + "\r\n");
-    // client.print(":" + client.getNick() + "!" + client.getUsername() + '@' + client.getRealIp() + " PRIVMSG " + clients[i].getNick() + " :" + message + "\r\n");
-
+    // else if (this->commands[1].compare(this->channels[i].getName()) == 0)
+    // {
+        // for (size_t m = 0; m < this->channels[i].getMembers().size(); m++)
+            // this->channels[i].getMembers()[m].print(":" + client.getNick() + "!" + client.getUsername() + '@' + client.getRealIp() + " PRIVMSG " + this->channels[i].getName() + " :"+ message + "\r\n");
+        // return ;
+    // }
 }

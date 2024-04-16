@@ -129,7 +129,7 @@ Server::Server(int port, std::string arg_pass)
 		
 		int valread;
 		char buffer[1024] = {0};
-		for (int i = 0; i < connected_clients.size(); i++)
+		for (size_t i = 0; i < connected_clients.size(); i++)
 		{
 			if (FD_ISSET(connected_clients[i], &tmpfds))
 			{

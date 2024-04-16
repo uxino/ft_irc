@@ -3,6 +3,8 @@
 
 void    Server::Join(int index, int id)
 {
+    int is_exist = 0;
+
 	for (int i = 0; i < channels.size(); i++)
 	{
 		if (channels[i].getChannelName() == commands[index + 1])
@@ -11,8 +13,6 @@ void    Server::Join(int index, int id)
             {
                 if (channels[i].getClients()[j].getUserName() ==  clients[id].getUserName())
                 {
-                    std::cout <<"channels[i]: " << channels[i].getClients()[j].getUserName() << std::endl;
-                    std::cout <<"clients[index]: " << clients[index].getUserName() << std::endl;
                     std::cout << "You are already in this channel" << std::endl;
                     return;
                 }
@@ -20,9 +20,15 @@ void    Server::Join(int index, int id)
 		}
 	}
 
-    Channel channel(commands[index + 1]);
-    channel.addClient(clients[index]);
-    channels.push_back(channel);
-    std::cout << "channel:::: " << commands[index + 1] << std::endl;
+    for (size_t i = 0; i < channels.size(); i++)
+        if (commands[index + 1] == channels[i].getChannelName())
+            is_exist = 1;
+    if (is_exist == 0)
+    {
+        Channel channel(commands[index + 1]);
+
+        channel.addClient(clients[index]);
+        channels.push_back(channel);
+    }
     clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@" + clients[id].getIp() + " JOIN " + commands[index + 1] + "\r\n");
 }

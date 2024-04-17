@@ -1,4 +1,5 @@
 #include "../Server/Server.hpp"
+#include<string.h>
 /*
 
 message from 0: MODE elmaa
@@ -28,20 +29,19 @@ void    Server::Privmsg(int index, int id)
     // {
     //     std::cout <<"commands[i]" << commands[i] << std::endl;
     // }
-    
+
     for (size_t i = 0; i < clients.size(); i++)
     {
-        if (commands[1].compare(channels[i].getChannelName()) == 0)
+        if (strcmp(commands[1].c_str(), channels[i].getChannelName().c_str()) == 0)
         {
             std::vector<Client> tmp_client = channels[i].getClients();
             for (size_t j = 0; j < tmp_client.size(); j++)
             {
                 tmp_client[j].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG " + channels[i].getChannelName() + " :"+ message + "\r\n");
             }
-            
         }
     }
-    
+
     // if(this->commands[1].compare(this->clients[i].getNick()) == 0)
     // {
         // clients[i].print(":" + client.getNick() + "!" + client.getUsername() + '@' + client.getRealIp() + " PRIVMSG " + clients[i].getNick() + " :" + message + "\r\n");

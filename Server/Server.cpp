@@ -22,7 +22,7 @@ void Server::checkCommands(Server &server, std::string buffer, int socket)
     while(std::getline(ss, line))
     {
         std::size_t prev = 0, pos;
-        while ((pos = line.find_first_of(" :\n#", prev)) != std::string::npos) // buraya ekstra olarak "#" eklendi
+        while ((pos = line.find_first_of(" :\n\r", prev)) != std::string::npos) // buraya ekstra olarak "#" eklendi
         {
             if (pos > prev)
                 this->commands.push_back(line.substr(prev, pos-prev));

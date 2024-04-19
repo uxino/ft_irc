@@ -19,16 +19,20 @@ void    Server::Join(int index, int id)
             }
 		}
 	}
+    Channel channel(commands[index + 1]);
 
     for (size_t i = 0; i < channels.size(); i++)
+    {
         if (commands[index + 1] == channels[i].getChannelName())
+        {
             is_exist = 1;
+            channels[i].addClient(clients[id]);
+        }
+    }
     if (is_exist == 0)
     {
-        Channel channel(commands[index + 1]);
-
-        channel.addClient(clients[index]);
+        channel.addClient(clients[id]);
         channels.push_back(channel);
     }
-    clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@" + clients[id].getIp() + " JOIN " + commands[index + 1] + "\r\n");
+    clients[id].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + "@" + clients[id].getIp() + " JOIN :" + commands[index + 1] + "\r\n");
 }

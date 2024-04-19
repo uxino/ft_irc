@@ -61,10 +61,23 @@ void Server::initilizeServer()
 	FD_SET(sockfd, &readfds);
 }
 
+
+void Server::excWho(int id) // test icin 
+{
+	std::string info= "Username :" + clients[id].getUserName() +"\r\n"+ "Nickname :" + clients[id].getNickName() + "\r\n";
+	std::cout << info << std::endl;
+}
+
 void Server::executeCommand(int id)
 {
 	std::vector<std::string> cmds;
 	std::vector<fpoint> tfun;
+	
+	tfun.push_back(&Server::User);
+	tfun.push_back(&Server::Nick);
+	tfun.push_back(&Server::Pass);
+	tfun.push_back(&Server::Join);
+	tfun.push_back(&Server::Privmsg);	
 
 	cmds.push_back(USER);
 	cmds.push_back(NICK);
@@ -72,25 +85,17 @@ void Server::executeCommand(int id)
 	cmds.push_back(JOIN);
 	cmds.push_back(PRIVMSG);
 
-	tfun.push_back(&Server::User);
-	tfun.push_back(&Server::Nick);
-	tfun.push_back(&Server::Pass);
-	tfun.push_back(&Server::Join);
-	tfun.push_back(&Server::Privmsg);
-
+	if (commands[0] == WHO)
+		excWho(id);
 	for (size_t i = 0; i < cmds.size(); i++)
 	{
 		for (size_t j = 0; j < commands.size(); j++)
 		{
-			if ((cmds[i] == commands[j]))
+			if ((cmds[i] == commands[j]) && (j+1 < commands.size()))
 			{
 				(this->*tfun[i])(j, id);
+				// std::cout << "Finded function: " << cmds[i] << " " << commands[j+1] << std::endl;
 			}
-            else if (!(j+1 <= commands.size()))
-            {
-                std::cout << "Wrong argmuman!!";
-                return;
-            }
 		}
 	}
 }

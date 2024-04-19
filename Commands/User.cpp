@@ -1,5 +1,6 @@
 #include "../Server/Server.hpp"
 
+// bir client disconnect attiginda bilgilerinin temizlenmesi lazim
 void Server::User(int index, int id)
 {
 	if (commands[index + 1].empty() == 0 && commands[index + 3].empty() == 0)

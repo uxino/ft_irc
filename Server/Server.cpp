@@ -98,7 +98,6 @@ void Server::executeCommand(int id)
 			if ((cmds[i] == commands[j]) && (j+1 < commands.size()))
 			{
 				(this->*tfun[i])(j, id);
-				std::cout << "Finded function: " << cmds[i] << " " << commands[j+1] << std::endl;
 			}
 		}
 	}

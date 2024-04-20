@@ -22,7 +22,7 @@ void Server::checkCommands(Server &server, std::string buffer, int socket)
     while(std::getline(ss, line))
     {
         std::size_t prev = 0, pos;
-        while ((pos = line.find_first_of(" :\n\r", prev)) != std::string::npos) // buraya ekstra olarak "#" eklendi
+        while ((pos = line.find_first_of(" :\r\n", prev)) != std::string::npos) // buraya ekstra olarak "#" eklendi
         {
             if (pos > prev)
                 this->commands.push_back(line.substr(prev, pos-prev));
@@ -84,17 +84,21 @@ void Server::executeCommand(int id)
 	cmds.push_back(PASS);
 	cmds.push_back(JOIN);
 	cmds.push_back(PRIVMSG);
+	
 
 	if (commands[0] == WHO)
-		excWho(id);
-	for (size_t i = 0; i < cmds.size(); i++)
+		Server::Who(0, id);
+	else if (commands[0] == LIST)
+		Server::List(0, id);
+	
+	for (int i = 0; i < cmds.size(); i++)
 	{
-		for (size_t j = 0; j < commands.size(); j++)
+		for (int j = 0; j < commands.size(); j++)
 		{
 			if ((cmds[i] == commands[j]) && (j+1 < commands.size()))
 			{
 				(this->*tfun[i])(j, id);
-				// std::cout << "Finded function: " << cmds[i] << " " << commands[j+1] << std::endl;
+				std::cout << "Finded function: " << cmds[i] << " " << commands[j+1] << std::endl;
 			}
 		}
 	}

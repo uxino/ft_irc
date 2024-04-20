@@ -12,12 +12,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sstream>
+#include <string.h>
 
 # define SOCKET_ERROR 	-1
 # define PASS			"PASS"
 # define JOIN			"JOIN"
 # define USER			"USER"
 # define WHO			"WHO"
+# define LIST			"LIST"
 # define NICK			"NICK"
 # define JOIN 			"JOIN"
 # define PRIVMSG		"PRIVMSG"
@@ -50,7 +52,10 @@ class Server
 		void						Pass(int index, int id);
 		void						Nick(int index, int id);
 		void						Join(int index, int id);
+		void						Who(int index, int id);
+		void						List(int index, int id);
 		void 						excWho(int id);
+		size_t						returnChannelIndex(std::string channel);
 		void						Privmsg(int index, int id);
 
 		int							getServerFd();

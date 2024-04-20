@@ -5,6 +5,8 @@ void    Server::Join(int index, int id)
 {
     int is_exist = 0;
 
+	if (commands[index + 1][0] != '#')
+		clients[id].print("JOIN: There is no # in the first character.\n");
 	for (int i = 0; i < channels.size(); i++)
 	{
 		if (channels[i].getChannelName() == commands[index + 1])
@@ -19,20 +21,21 @@ void    Server::Join(int index, int id)
             }
 		}
 	}
-    Channel channel(commands[index + 1]);
 
     for (size_t i = 0; i < channels.size(); i++)
-    {
+	{
         if (commands[index + 1] == channels[i].getChannelName())
-        {
+		{		
+	    	channels[i].addClient(clients[id]);
             is_exist = 1;
-            channels[i].addClient(clients[id]);
-        }
-    }
+		}
+	}
     if (is_exist == 0)
     {
+        Channel channel(commands[index + 1]);
+
         channel.addClient(clients[id]);
         channels.push_back(channel);
     }
-    clients[id].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + "@" + clients[id].getIp() + " JOIN :" + commands[index + 1] + "\r\n");
+    clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@localhost" + " JOIN :" + commands[index + 1] + "\r\n");
 }

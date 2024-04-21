@@ -42,8 +42,8 @@ void    Server::Privmsg(int index, int id)
         }
         else if (strcmp(clients[i].getNickName().c_str(),commands[1].substr(1).c_str()) == 0)
 		{
-            clients[i].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG #" + clients[i].getNickName() + " :"+ message + "\r\n");
-            clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG #" + clients[i].getNickName() + " :"+ message + "\r\n");
+            clients[i].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
+            clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
 			return;
 		}
     }

@@ -28,6 +28,7 @@ void    Server::Join(int index, int id)
 		{		
 	    	channels[i].addClient(clients[id]);
             is_exist = 1;
+            break;
 		}
 	}
     if (is_exist == 0)
@@ -37,5 +38,19 @@ void    Server::Join(int index, int id)
         channel.addClient(clients[id]);
         channels.push_back(channel);
     }
-    clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@localhost" + " JOIN :" + commands[index + 1] + "\r\n");
+    for (size_t i = 0; i < channels.size(); i++)
+    {
+        if (channels[i].getChannelName() == commands[index + 1])
+        {
+            for (size_t j = 0; j < channels[i].getClients().size(); j++)
+                channels[i].getClients()[j].print(":" + channels[i].getClients()[j].getUserName() + "!" + channels[i].getClients()[j].getUserName() + "@localhost" + " JOIN " + commands[index + 1] + "\r\n");
+            for (size_t k = 0; k < channels[i].getClients().size(); k++)
+            {
+                if (channels[i].getClients()[k].getNickName() != clients[id].getNickName())
+                    channels[i].getClients()[k].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@localhost" + " JOIN " + commands[index + 1] + "\r\n");
+            }
+            
+        }
+    }
+    
 }

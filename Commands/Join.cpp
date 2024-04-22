@@ -43,15 +43,11 @@ void    Server::Join(int index, int id)
         if (channels[i].getChannelName() == commands[index + 1])
         {
             for (size_t j = 0; j < channels[i].getClients().size(); j++)
-            {
                 channels[i].getClients()[j].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + "@localhost" + " JOIN " + commands[index + 1] + "\r\n");
-                std::cout << "clients[id].print: " << channels[i].getClients()[j].getUserName() << std::endl;
-            }
             for (size_t k = 0; k < channels[i].getClients().size(); k++)
             {
                 if (channels[i].getClients()[k].getNickName() != clients[id].getNickName())
                     clients[id].print(":" + channels[i].getClients()[k].getUserName() + "!" + channels[i].getClients()[k].getUserName() + "@localhost" + " JOIN " + commands[index + 1] + "\r\n");
-                std::cout << "channels[i].print: " << channels[i].getClients()[k].getNickName() << std::endl;
             }
         }
     }

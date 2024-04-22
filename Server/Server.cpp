@@ -155,7 +155,7 @@ Server::Server(int port, std::string arg_pass)
 				if (valread > 0)
 				{
 					// add send message to other clients
-					std::cout << "message from " << i << ": " <<  buffer << std::endl;
+					// std::cout << "message from " << i << ": " <<  buffer << std::endl;
 					memset(buffer, 0, sizeof(buffer));
 				}
 				else if (valread == 0)

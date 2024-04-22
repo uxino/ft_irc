@@ -8,7 +8,7 @@ size_t Server::returnChannelIndex(std::string channel)
     {
         if (this->channels[i].getChannelName() == channel)
 		{
-			std::cout << "sikinti yok" << std::endl;
+			// std::cout << "sikinti yok" << std::endl;
             return i;
 		}
     }

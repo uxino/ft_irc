@@ -9,14 +9,16 @@ class Channel
     private:
         std::vector<Client> clients;
         std::string channelName;
-        std::string ChannelAdmin;
+		int			channelAdminSetted;
 
     public:
         Channel(std::string name);
         std::vector<Client> getClients();
         std::string         getChannelName();
+		int					getChannelAdminSetted();
         // void                setChannelAdmin(Client client);
 		void				addClient(Client client);
+		void				setAdmin();
         ~Channel();
 
 };

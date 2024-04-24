@@ -1,26 +1,10 @@
 #include "../Server/Server.hpp"
 
-/*
-
-message from 0: MODE elmaa
-
-message from 0: WHO elmaa
-
-message from 0: MODE elmaa b
-
-message from 0: PRIVMSG elmaa :ben geldim kral
-
-privmsg Pragma Hello! ** burada sadece 1 kişiye mesaj yollanmış
-privmsg Pragma,Crocodile Hello to you both! ** burada ise iki kişiye yollanmış
-privmsg #kvirc Hello from outside! ** burada channel'a yollanmış
-
-*/
-
 void    Server::Privmsg(int index, int id)
 {
     std::string message = "";
 	size_t i;
-
+	static int flag = 0;
     for (i = 2; i < this->commands.size(); i++)
     {
         message += commands[i];
@@ -29,7 +13,6 @@ void    Server::Privmsg(int index, int id)
 
     for (i = 0; i < clients.size(); i++)
     {
-		std::cout << "commands[1].sub: " << commands[1].substr(0)<< std::endl;
         if (channels.size() > i && strcmp(commands[1].c_str(), channels[i].getChannelName().c_str()) == 0)
         {
             std::vector<Client> tmp_client = channels[i].getClients();
@@ -42,8 +25,8 @@ void    Server::Privmsg(int index, int id)
         }
         else if (strcmp(clients[i].getNickName().c_str(),commands[1].c_str()) == 0)
 		{
-            clients[i].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
-            clients[id].print(":" + clients[id].getUserName() + "!" + clients[id].getUserName() + '@' + clients[id].getIp() + " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
+			clients[i].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + "@localhost"+ " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
+            clients[id].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + "@localhost" + " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
 			return;
 		}
     }

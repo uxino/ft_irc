@@ -77,27 +77,30 @@ void Server::executeCommand(int id)
 	tfun.push_back(&Server::Nick);
 	tfun.push_back(&Server::Pass);
 	tfun.push_back(&Server::Join);
-	tfun.push_back(&Server::Privmsg);	
+	tfun.push_back(&Server::Privmsg);
+	tfun.push_back(&Server::Who);
 
 	cmds.push_back(USER);
 	cmds.push_back(NICK);
 	cmds.push_back(PASS);
 	cmds.push_back(JOIN);
 	cmds.push_back(PRIVMSG);
+	cmds.push_back(WHO);
 	
 
-	if (commands[0] == WHO)
-		Server::Who(0, id);
-	else if (commands[0] == LIST)
-		Server::List(0, id);
-	
 	for (int i = 0; i < cmds.size(); i++)
 	{
 		for (int j = 0; j < commands.size(); j++)
 		{
 			if ((cmds[i] == commands[j]) && (j+1 < commands.size()))
 			{
-				(this->*tfun[i])(j, id);
+				if (clients[id].getLoggedIn() || i < 3)
+					(this->*tfun[i])(j, id);
+				else
+				{
+					clients[id].print("you need to complete the registration. USER/NICK/PASS\r\n");
+					break;
+				}
 			}
 		}
 	}
@@ -149,8 +152,8 @@ Server::Server(int port, std::string arg_pass)
                 {
                     clients[i].setLoggedIn(1);
                     std::cout << "Successfully logged into the system!!" << std::endl;
-					clients[i].print(":" + clients[i].getIp() + " 001 " + clients[i].getUserName() + " :Welcome to the Internet Relay Network " \
-						+ clients[i].getUserName() + "!" + clients[i].getUserName() + "@" + clients[i].getIp() + "\r\n");
+					clients[i].print(":" + clients[i].getIp() + " 001 " + clients[i].getNickName() + " :Welcome to the Internet Relay Network " \
+						+ clients[i].getNickName() + "!" + clients[i].getUserName() + "@" + clients[i].getIp() + "\r\n");
                 }
 				if (valread > 0)
 				{

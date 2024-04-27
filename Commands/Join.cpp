@@ -11,11 +11,13 @@ void    Server::Join(int index, int id)
 	{
 		if (channels[i].getChannelName() == commands[index + 1])
 		{
-            for (int j = 0; j < channels[i].getClients().size(); ++j)
+			std::vector<Client> c_clients = channels[i].getClients();
+            for (int j = 0; j < c_clients.size(); ++j)
             {
-                if (channels[i].getClients()[j].getUserName() ==  clients[id].getUserName())
+                if (c_clients[j].getNickName() ==  clients[id].getNickName())
                 {
                     std::cout << "You are already in this channel" << std::endl;
+					clients[id].print("JOIN: You are already in this channel\n");
                     return;
                 }
             }

@@ -13,5 +13,7 @@ int					Channel::getChannelAdminSetted() { return this->channelAdminSetted; }
 
 void				Channel::setAdmin() { this->channelAdminSetted = 1; }
 
+void 				Channel::setClients(std::vector<Client> clients) { this->clients = clients;}
+
 
 Channel::~Channel() { }

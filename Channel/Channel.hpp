@@ -17,6 +17,7 @@ class Channel
         std::string         getChannelName();
 		int					getChannelAdminSetted();
         // void                setChannelAdmin(Client client);
+		void				setClients(std::vector<Client> clients);
 		void				addClient(Client client);
 		void				setAdmin();
         ~Channel();

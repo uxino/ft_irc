@@ -23,6 +23,7 @@
 # define NICK			"NICK"
 # define JOIN 			"JOIN"
 # define PRIVMSG		"PRIVMSG"
+# define KICK			"KICK"
 
 class Server
 {
@@ -54,10 +55,12 @@ class Server
 		void						Join(int index, int id);
 		void						Who(int index, int id);
 		void						List(int index, int id);
+		void						Kick(int index, int id);
 		void 						excWho(int id);
-		size_t						returnChannelIndex(std::string channel);
 		void						Privmsg(int index, int id);
 
+		size_t						getChannelIndex(std::string name);
+		size_t						getClientIndex(std::string name);
 		int							getServerFd();
 		int							getAcceptFd();
 		int							getPort();

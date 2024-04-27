@@ -11,6 +11,14 @@ int Server::perr(std::string err, int sockfd)
 	exit(-1);
 }
 
+size_t	Server::getClientIndex(std::string name)
+{
+	for (size_t i = 0; i < clients.size(); i++)
+		if (strcmp(clients[i].getNickName().c_str(), name.c_str()) == 0)
+			return (i);
+	return (-1);	
+}
+
 void Server::checkCommands(Server &server, std::string buffer, int socket)
 {
 	std::stringstream ss(buffer);
@@ -79,6 +87,7 @@ void Server::executeCommand(int id)
 	tfun.push_back(&Server::Join);
 	tfun.push_back(&Server::Privmsg);
 	tfun.push_back(&Server::Who);
+	tfun.push_back(&Server::Kick);
 
 	cmds.push_back(USER);
 	cmds.push_back(NICK);
@@ -86,11 +95,11 @@ void Server::executeCommand(int id)
 	cmds.push_back(JOIN);
 	cmds.push_back(PRIVMSG);
 	cmds.push_back(WHO);
-	
+	cmds.push_back(KICK);
 
-	for (int i = 0; i < cmds.size(); i++)
+	for (size_t i = 0; i < cmds.size(); i++)
 	{
-		for (int j = 0; j < commands.size(); j++)
+		for (size_t j = 0; j < commands.size(); j++)
 		{
 			if ((cmds[i] == commands[j]) && (j+1 < commands.size()))
 			{

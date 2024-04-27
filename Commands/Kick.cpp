@@ -5,19 +5,18 @@
 // kick #a museker
 void    Server::Kick(int index, int id)
 {
-    size_t	client_index;
-    std::string message = "";
-	size_t	channel_index;
-
 	if (commands.size() != 3)
 	{
 		std::cout << "You should use like this: KICK #channelName nickName" << std::endl;
 		clients[id].print("You should use like this: KICK #channelName nickName\n");
 		return;
 	}
+	
+	size_t	client_index;
+    std::string message = "";
+	size_t	channel_index;
 	channel_index = getChannelIndex(commands[1]);
     client_index = getClientIndex(commands[2]);
-
 
     if (client_index == -1 || channel_index == -1)
 		clients[id].print("KICK: There is no one or channel for this name.\n");

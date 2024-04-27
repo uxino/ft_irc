@@ -5,6 +5,12 @@ void    Server::Privmsg(int index, int id)
     std::string message = "";
 	size_t i;
 	static int flag = 0;
+	if (commands.size() < 3)
+	{
+		std::cout << "You should use like this: PRIVMSG userName message";
+		clients[id].print("You should use like this: PRIVMSG userName message\n");
+	}
+	
     for (i = 2; i < this->commands.size(); i++)
     {
         message += commands[i];

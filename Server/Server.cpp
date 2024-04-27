@@ -11,7 +11,7 @@ int Server::perr(std::string err, int sockfd)
 	exit(-1);
 }
 
-size_t	Server::getClientIndex(std::string name)
+int	Server::getClientIndex(std::string name)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 		if (strcmp(clients[i].getNickName().c_str(), name.c_str()) == 0)

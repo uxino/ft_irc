@@ -1,5 +1,16 @@
 #include "../Server/Server.hpp"
 
+int	Server::isInChannel(std::vector<Client> c_clients, std::string name)
+{
+	for (size_t i = 0; i < c_clients.size(); i++)
+		if (strcmp(c_clients[i].getNickName().c_str(),name.c_str()) == 0)
+			return 1;
+	return -1;
+}
+
+
+
+
 void    Server::Privmsg(int index, int id)
 {
     std::string message = "";
@@ -10,7 +21,7 @@ void    Server::Privmsg(int index, int id)
 		std::cout << "You should use like this: PRIVMSG userName message";
 		clients[id].print("You should use like this: PRIVMSG userName message\n");
 	}
-	
+
     for (i = 2; i < this->commands.size(); i++)
     {
         message += commands[i];
@@ -19,7 +30,7 @@ void    Server::Privmsg(int index, int id)
 
     for (i = 0; i < clients.size(); i++)
     {
-        if (channels.size() > i && strcmp(commands[1].c_str(), channels[i].getChannelName().c_str()) == 0)
+        if (channels.size() > i && strcmp(commands[1].c_str(), channels[i].getChannelName().c_str()) == 0 && isInChannel(channels[i].getClients(), clients[id].getNickName()) != -1)
         {
             std::vector<Client> tmp_client = channels[i].getClients();
             for (size_t j = 0; j < tmp_client.size(); j++)

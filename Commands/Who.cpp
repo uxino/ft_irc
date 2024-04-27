@@ -1,11 +1,11 @@
 #include "../Server/Server.hpp"
 
-size_t Server::getChannelIndex(std::string channel)
+int Server::getChannelIndex(std::string channel)
 {
     for (size_t i = 0; i < this->channels.size(); i++)
     {
         if (this->channels[i].getChannelName() == channel)
-            return i;
+            return (int)i;
 	}
     return -1;
 }

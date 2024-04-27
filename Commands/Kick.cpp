@@ -11,12 +11,10 @@ void    Server::Kick(int index, int id)
 		clients[id].print("You should use like this: KICK #channelName nickName\n");
 		return;
 	}
-	
-	size_t	client_index;
+
+	int	channel_index = getChannelIndex(commands[1]);
+	int	client_index = getClientIndex(commands[2]);
     std::string message = "";
-	size_t	channel_index;
-	channel_index = getChannelIndex(commands[1]);
-    client_index = getClientIndex(commands[2]);
 
     if (client_index == -1 || channel_index == -1)
 		clients[id].print("KICK: There is no one or channel for this name.\n");

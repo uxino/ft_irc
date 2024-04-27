@@ -59,8 +59,9 @@ class Server
 		void 						excWho(int id);
 		void						Privmsg(int index, int id);
 
-		size_t						getChannelIndex(std::string name);
-		size_t						getClientIndex(std::string name);
+		int							isInChannel(std::vector<Client> c_clients, std::string name);
+		int							getChannelIndex(std::string name);
+		int							getClientIndex(std::string name);
 		int							getServerFd();
 		int							getAcceptFd();
 		int							getPort();

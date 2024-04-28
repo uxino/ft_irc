@@ -88,6 +88,9 @@ void Server::executeCommand(int id)
 	tfun.push_back(&Server::Privmsg);
 	tfun.push_back(&Server::Who);
 	tfun.push_back(&Server::Kick);
+	tfun.push_back(&Server::Part);
+	tfun.push_back(&Server::Quit);
+	tfun.push_back(&Server::Topic);
 
 	cmds.push_back(USER);
 	cmds.push_back(NICK);
@@ -96,6 +99,9 @@ void Server::executeCommand(int id)
 	cmds.push_back(PRIVMSG);
 	cmds.push_back(WHO);
 	cmds.push_back(KICK);
+	cmds.push_back(PART);
+	cmds.push_back(QUIT);
+	cmds.push_back(TOPIC);
 
 	for (size_t i = 0; i < cmds.size(); i++)
 	{
@@ -173,7 +179,6 @@ Server::Server(int port, std::string arg_pass)
 				else if (valread == 0)
 				{
 					std::cout << "client disconnected" << i << std::endl;
-					close(connected_clients[i]);
 					connected_clients.erase(connected_clients.begin()+i);
 					--i;
 				}

@@ -15,5 +15,9 @@ void				Channel::setAdmin() { this->channelAdminSetted = 1; }
 
 void 				Channel::setClients(std::vector<Client> clients) { this->clients = clients;}
 
+std::string         Channel::getTopic() { return topic; }
+
+void                Channel::setTopic(std::string new_topic) { topic = new_topic; }
+
 
 Channel::~Channel() { }

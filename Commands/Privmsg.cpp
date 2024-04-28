@@ -4,12 +4,9 @@ int	Server::isInChannel(std::vector<Client> c_clients, std::string name)
 {
 	for (size_t i = 0; i < c_clients.size(); i++)
 		if (strcmp(c_clients[i].getNickName().c_str(),name.c_str()) == 0)
-			return 1;
+			return i;
 	return -1;
 }
-
-
-
 
 void    Server::Privmsg(int index, int id)
 {

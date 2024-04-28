@@ -10,7 +10,7 @@ class Channel
         std::vector<Client> clients;
         std::string channelName;
 		int			channelAdminSetted;
-
+		std::string topic;
     public:
         Channel(std::string name);
         std::vector<Client> getClients();
@@ -20,6 +20,9 @@ class Channel
 		void				setClients(std::vector<Client> clients);
 		void				addClient(Client client);
 		void				setAdmin();
+        void                setTopic(std::string new_topi);
+        std::string         getTopic();
+
         ~Channel();
 
 };

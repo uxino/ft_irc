@@ -16,7 +16,6 @@ void    Server::Join(int index, int id)
             {
                 if (c_clients[j].getNickName() ==  clients[id].getNickName())
                 {
-                    std::cout << "You are already in this channel" << std::endl;
 					clients[id].print("JOIN: You are already in this channel\n");
                     return;
                 }

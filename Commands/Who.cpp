@@ -10,7 +10,6 @@ int Server::getChannelIndex(std::string channel)
     return -1;
 }
 
-
 void	Server::Who(int index, int id)
 {
 	std::cout << commands[index + 1] << std::endl;
@@ -24,7 +23,6 @@ void	Server::Who(int index, int id)
         return ;
 	}
 }
-
 
 void Server::List(int index, int id)
 {

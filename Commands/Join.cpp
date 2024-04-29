@@ -43,6 +43,8 @@ void    Server::Join(int index, int id)
     {
         if (channels[i].getChannelName() == commands[index + 1])
         {
+			if (isInChannel(channels[i].getChannelAdmins(),channels[i].getClients()[0].getNickName()) == -1)
+				channels[i].addAdmin(channels[i].getClients()[0]);
             for (size_t j = 0; j < channels[i].getClients().size(); j++)
             {
                 channels[i].getClients()[j].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + "@"+ clients[id].getIp() + " JOIN " + commands[index + 1] + "\r\n");

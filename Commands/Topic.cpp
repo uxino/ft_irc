@@ -11,6 +11,11 @@ void    Server::Topic(int index, int id)
     {
         if (commands[index + 1] == channels[j].getChannelName())
         {
+			if (isInChannel(channels[j].getChannelAdmins(), clients[id].getNickName()) == -1)
+			{
+				clients[id].print("TOPIC: You are not a admin for " + channels[j].getChannelName() + ".\n");
+				return;
+			}
             if (commands[index + 1] == channels[j].getChannelName() && isInChannel(channels[j].getClients(), clients[id].getNickName()) != -1)
             {
                 is_exist = 1;

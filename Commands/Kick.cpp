@@ -20,6 +20,11 @@ void    Server::Kick(int index, int id)
 		clients[id].print("KICK: There is no one or channel for this name.\n");
     else
 	{
+		if (isInChannel(channels[channel_index].getChannelAdmins(), clients[id].getNickName()) == -1)
+		{
+			clients[id].print("KICK: You are not a admin for " + channels[channel_index].getChannelName() + ".\n");
+			return;
+		}
 		for (size_t i = 3; i < this->commands.size(); i++)
     	{
         	message += commands[i];

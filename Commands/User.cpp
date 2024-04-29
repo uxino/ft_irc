@@ -9,5 +9,5 @@ void Server::User(int index, int id)
         clients[id].setIp(commands[index + 3]);
 	}
     else
-		std::cout << "The format is 'USER username 0 realname'" << std::endl;
+		clients[id].print("The format is 'USER username 0 realname\n");
 }

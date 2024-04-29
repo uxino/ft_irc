@@ -36,5 +36,4 @@ void    Server::Kick(int index, int id)
 		c_clients.erase(c_clients.begin() + client_index);
 		channels[channel_index].setClients(c_clients);
 	}
-		
 }

@@ -27,6 +27,7 @@
 # define JOIN 			"JOIN"
 # define PRIVMSG		"PRIVMSG"
 # define KICK			"KICK"
+# define NOTICE 		"NOTICE"
 
 class Server
 {
@@ -62,6 +63,7 @@ class Server
 		void						Who(int index, int id);
 		void						List(int index, int id);
 		void						Kick(int index, int id);
+		void						Notice(int index, int id);
 		void 						excWho(int id);
 		void						Privmsg(int index, int id);
 		void    					Part2(int index, int id, Channel& channel, int flag);

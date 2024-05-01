@@ -7,7 +7,6 @@ void    Server::Kick(int index, int id)
 {
 	if (commands.size() != 3)
 	{
-		std::cout << "You should use like this: KICK #channelName nickName" << std::endl;
 		clients[id].print("You should use like this: KICK #channelName nickName\n");
 		return;
 	}

@@ -91,6 +91,7 @@ void Server::executeCommand(int id)
 	tfun.push_back(&Server::Part);
 	tfun.push_back(&Server::Quit);
 	tfun.push_back(&Server::Topic);
+	tfun.push_back(&Server::Notice);
 
 	cmds.push_back(USER);
 	cmds.push_back(NICK);
@@ -102,6 +103,7 @@ void Server::executeCommand(int id)
 	cmds.push_back(PART);
 	cmds.push_back(QUIT);
 	cmds.push_back(TOPIC);
+	cmds.push_back(NOTICE);
 
 	for (size_t i = 0; i < cmds.size(); i++)
 	{
@@ -173,7 +175,7 @@ Server::Server(int port, std::string arg_pass)
 				if (valread > 0)
 				{
 					// add send message to other clients
-					// std::cout << "message from " << i << ": " <<  buffer << std::endl;
+					std::cout << "message from " << i << ": " <<  buffer << std::endl;
 					memset(buffer, 0, sizeof(buffer));
 				}
 				else if (valread == 0)

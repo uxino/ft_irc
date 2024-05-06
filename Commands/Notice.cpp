@@ -7,14 +7,10 @@ void	Server::Notice(int index, int id)
     std::string message = "";
 	int	channel_index = getChannelIndex(commands[1]);
 
-	std::cout << "commands[2]: (" << commands[2] << ")" << std::endl;
-	if (strcmp(commands[2].c_str(), "LAGCHECK") == 0)
-		return;
     if (channel_index == -1)
 		clients[id].print("NOTICE: There is no channel for this name.\n");
 	else
 	{
-
 		if (isInChannel(channels[channel_index].getChannelAdmins(), clients[id].getNickName()) == -1)
 		{
 			clients[id].print("NOTICE: You are not a admin for " + channels[channel_index].getChannelName() + ".\n");
@@ -37,13 +33,6 @@ void	Server::Notice(int index, int id)
 				}
 				return;
     	    }
-// (nick, username, target, message) (":" + nick + "!" + username + "@localhost NOTICE " + target + " " + message + "\r\n")
-
-    	    // else if (strcmp(clients[i].getNickName().c_str(),commands[1].c_str()) == 0)
-			// {
-			// 	clients[i].print(":" + clients[id].getNickName() + "!" + clients[id].getUserName() + "@localhost"+ " PRIVMSG " + clients[i].getNickName() + " :"+ message + "\r\n");
-			// 	return;
-			// }
     	}
 	}
 }

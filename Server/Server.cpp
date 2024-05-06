@@ -11,6 +11,14 @@ int Server::perr(std::string err, int sockfd)
 	exit(-1);
 }
 
+int	Server::getClientIndex2(std::string name, std::vector<Client> clients)
+{
+	for (size_t i = 0; i < clients.size(); i++)
+		if (strcmp(clients[i].getNickName().c_str(), name.c_str()) == 0)
+			return (i);
+	return (-1);	
+}
+
 int	Server::getClientIndex(std::string name)
 {
 	for (size_t i = 0; i < clients.size(); i++)
@@ -145,7 +153,8 @@ Server::Server(int port, std::string arg_pass)
 			this->clients.push_back(newC);
 			if (new_socket < 0)
 				perr("accept error failed", sockfd);
-			else{
+			else
+			{
 				std::cout << "accept connetion" << std::endl;
 				// send(new_socket, "Server Welcome to IRC SERVER\r\n", 23, 0);
 				FD_SET(new_socket, &readfds);
@@ -181,7 +190,7 @@ Server::Server(int port, std::string arg_pass)
 				else if (valread == 0)
 				{
 					std::cout << "client disconnected" << i << std::endl;
-					connected_clients.erase(connected_clients.begin()+i);
+					Quit(0, i);
 					--i;
 				}
 			}

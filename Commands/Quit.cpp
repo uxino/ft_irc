@@ -12,12 +12,10 @@ void    Server::Part2(int index, int id, Channel& channel, int flag)
 
 void Server::Quit(int index, int id)
 {
-	std::cout << "quit sinyali geldi" << std::endl;
-	std::cout << "quit atan kisi user = " << clients[id].getUserName() << std::endl;
+	std::cout << "test" << std::endl;
 	for (size_t i = 0; i < channels.size(); i++)
 		if (isInChannel(channels[i].getClients(), clients[id].getNickName()) != -1)
 			Part2(index, id, channels[i], 0);
-
 	close(clients[id].getSocket());
 	clients.erase(clients.begin()+id);
 	close(connected_clients[id]);

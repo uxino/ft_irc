@@ -12,13 +12,18 @@ void    Server::Kick(int index, int id)
 	}
 
 	int	channel_index = getChannelIndex(commands[1]);
-	int	client_index = getClientIndex(commands[2]);
     std::string message = "";
 
-    if (client_index == -1 || channel_index == -1)
+    if (channel_index == -1)
 		clients[id].print("KICK: There is no one or channel for this name.\n");
     else
 	{
+		int	client_index = getClientIndex2(commands[2], channels[channel_index].getClients());
+    	if (client_index == -1)
+		{
+			clients[id].print("KICK: There is no one or channel for this name.\n");
+			return;
+		}
 		if (isInChannel(channels[channel_index].getChannelAdmins(), clients[id].getNickName()) == -1)
 		{
 			clients[id].print("KICK: You are not a admin for " + channels[channel_index].getChannelName() + ".\n");
@@ -31,8 +36,18 @@ void    Server::Kick(int index, int id)
     	}
 		std::vector<Client> c_clients = channels[channel_index].getClients();
 		for (size_t i = 0; i < c_clients.size(); i++)
-			c_clients[i].print("KICK " + channels[channel_index].getChannelName() + " " + clients[client_index].getNickName() + " " +  message + "\r\n");
+		{
+			c_clients[i].print("KICK " + channels[channel_index].getChannelName() + " " + c_clients[client_index].getNickName() + " " +  message + "\r\n");
+			std::cout << "for 1: " << c_clients[i].getNickName() << std::endl;
+
+		}
 		c_clients.erase(c_clients.begin() + client_index);
+		std::cout << "client -> " << client_index << std::endl;
 		channels[channel_index].setClients(c_clients);
+		for (size_t i = 0; i < c_clients.size(); i++)
+		{
+			std::cout << "for 2: " << c_clients[i].getNickName() << std::endl;
+		}
+		
 	}
 }

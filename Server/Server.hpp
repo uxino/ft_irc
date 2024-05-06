@@ -28,6 +28,7 @@
 # define PRIVMSG		"PRIVMSG"
 # define KICK			"KICK"
 # define NOTICE 		"NOTICE"
+# define MODE			"MODE"
 
 class Server
 {
@@ -66,11 +67,14 @@ class Server
 		void						Notice(int index, int id);
 		void 						excWho(int id);
 		void						Privmsg(int index, int id);
+		void						Mode(int index, int id);
 		void    					Part2(int index, int id, Channel& channel, int flag);
+		void						Quit2();
 
 		int							isInChannel(std::vector<Client> c_clients, std::string name);
 		int							getChannelIndex(std::string name);
 		int							getClientIndex(std::string name);
+		int							getClientIndex2(std::string name, std::vector<Client> clients);
 		int							getServerFd();
 		int							getAcceptFd();
 		int							getPort();

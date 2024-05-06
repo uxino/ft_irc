@@ -12,6 +12,10 @@ void    Server::Join(int index, int id)
 		if (channels[i].getChannelName() == commands[index + 1])
 		{
 			std::vector<Client> c_clients = channels[i].getClients();
+			for (size_t j = 0; j < c_clients.size(); j++)
+			{
+				std::cout << "for 3: " << c_clients[j].getNickName() << std::endl;
+			}
             for (int j = 0; j < c_clients.size(); ++j)
             {
                 if (c_clients[j].getNickName() ==  clients[id].getNickName())

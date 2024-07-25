@@ -1,3 +1,6 @@
 # ft_irc Project
-
-The ft_irc project is an implementation of an Internet Relay Chat (IRC) system. Through this project, I gained in-depth knowledge of socket programming and the intricacies of server-client communication. The main objective of this project was to facilitate real-time messaging between users, providing a hands-on experience in network programming and protocol design.
+This project entailed developing a custom IRC server using C++, leveraging Socket and Network
+programming. IRC facilitates real-time text communication between internet-connected computers,
+supporting group discussions in “channels,” private messaging, and client-side commands. We mastered
+TCP/IP (v4) communication between clients and servers and implemented IRC protocols to ensure robust
+and efficient communication.
